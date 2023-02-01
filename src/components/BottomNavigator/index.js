@@ -39,9 +39,7 @@ export default function BottomNavigator({ state, descriptors, navigation }) {
           });
 
           if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name, {
-              key: 0
-            });
+            navigation.navigate(route.name);
           }
         };
 
@@ -58,21 +56,19 @@ export default function BottomNavigator({ state, descriptors, navigation }) {
         if (label === 'Home') {
           iconName = 'home-outline';
           Newlabel = 'Home';
-        } else if (label === 'Produk') {
-          iconName = 'cube-outline';
-          Newlabel = 'Produk';
-        } else if (label === 'Kategori') {
+        } else if (label === 'Account') {
+          iconName = 'person-outline';
+          Newlabel = 'Akun';
+        } else if (label === 'Laporan') {
           iconName = 'grid-outline';
-          Newlabel = 'Kategori';
-        } else if (label === 'Suggest') {
-          iconName = 'duplicate-outline';
-          Newlabel = 'Suggest';
+        } else if (label === 'Asset') {
+          iconName = 'pulse-outline';
         } else if (label === 'History') {
-          iconName = 'receipt-outline';
+          iconName = 'file-tray-stacked-outline';
           Newlabel = 'History';
-        } else if (label === 'Favorit') {
-          iconName = 'heart-outline';
-          Newlabel = 'Favorit';
+        } else if (label === 'Whatsapp') {
+          iconName = 'call-outline';
+          Newlabel = 'Contact';
         }
 
         return (
@@ -83,11 +79,11 @@ export default function BottomNavigator({ state, descriptors, navigation }) {
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
             onPress={
-              label === 'Kategori'
+              label === 'Chat'
                 ? () =>
-                  navigation.navigate('Barang', {
-                    key: 0
-                  })
+                  Linking.openURL(
+                    'https://api.whatsapp.com/send?phone=6289653763986',
+                  )
                 : onPress
             }
             onLongPress={onLongPress}
@@ -114,13 +110,13 @@ export default function BottomNavigator({ state, descriptors, navigation }) {
                   name={isFocused ? iconName.replace('-outline', '') : iconName}
                   type="ionicon"
                   size={windowWidth / 20}
-                  color={isFocused ? colors.secondary : colors.secondary}
+                  color={isFocused ? colors.primary : colors.primary}
                 />
 
                 <Text
                   style={{
                     fontSize: windowWidth / 45,
-                    color: isFocused ? colors.secondary : colors.secondary,
+                    color: isFocused ? colors.primary : colors.primary,
                   }}>
                   {Newlabel}
                 </Text>

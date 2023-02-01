@@ -50,46 +50,49 @@ export default function GetStarted({ navigation }) {
       <View
         style={{
           flex: 1,
-          alignItems: 'center',
           justifyContent: 'center',
+          alignItems: 'center',
         }}>
-
-        <Image
-          source={require('../../assets/logo.png')}
-          style={{
-            height: 200,
-          }}
-        />
-
+        <View style={{
+          backgroundColor: colors.white,
+          borderRadius: 100,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginVertical: 10,
+        }}>
+          <Image
+            source={require('../../assets/splash.png')}
+            style={{
+              resizeMode: 'contain',
+              height: windowHeight / 3,
+            }}
+          />
+          <Text style={{
+            fontFamily: fonts.secondary[600],
+            fontSize: windowWidth / 28
+          }}>Jualan mudah untung berlimpah</Text>
+        </View>
 
       </View>
 
-      <View style={{
-        justifyContent: 'center',
-        padding: 10,
-      }}>
-        <MyButton
-          title="LOGIN"
-          Icons="log-in-outline"
+      <MyButton
+        title="LOGIN"
+        Icons="log-in-outline"
 
 
-          warna={colors.primary}
-          onPress={() => navigation.navigate('Login')}
-        />
+        warna={colors.primary}
+        onPress={() => navigation.navigate('Login')}
+      />
 
-        <MyGap jarak={20} />
+      <MyGap jarak={20} />
 
-        <MyButton
-          title="REGISTER"
-          borderSize={1}
-          borderColor={colors.primary}
-          colorText={colors.primary}
-          iconColor={colors.primary}
-          Icons="create-outline"
+      <MyButton
+        title="REGISTER"
+        warna={colors.secondary}
+        Icons="create-outline"
 
-          onPress={() => navigation.navigate('Register')}
-        />
-      </View>
+        onPress={() => navigation.navigate('Register')}
+      />
 
       <Animated.View style={{ height: top }} />
     </SafeAreaView>
@@ -99,7 +102,8 @@ export default function GetStarted({ navigation }) {
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    backgroundColor: colors.background1,
+    padding: 20,
+    backgroundColor: colors.white,
   },
   title: {
     marginTop: 50,

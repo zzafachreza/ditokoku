@@ -25,7 +25,7 @@ export default function MyCarouser() {
 
   useEffect(() => {
     axios.get(urlAPI + '/slider.php').then(res => {
-      console.log('slider', res.data);
+      console.log(res.data);
       setData(res.data);
     });
   }, []);
@@ -37,7 +37,7 @@ export default function MyCarouser() {
       source={{ uri: item.image }}
       style={{
         resizeMode: 'cover',
-        height: 150,
+        height: 180,
         width: 300,
         borderRadius: 10,
       }}

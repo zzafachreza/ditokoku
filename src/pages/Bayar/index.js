@@ -92,7 +92,7 @@ export default function Bayar({ navigation, route }) {
       <View
         style={{
           padding: 10,
-          color: colors.textPrimary,
+          backgroundColor: colors.white,
           marginVertical: 10,
           borderWidth: 1,
           borderRadius: 10,
@@ -102,7 +102,7 @@ export default function Bayar({ navigation, route }) {
         <Text
           style={{
             fontFamily: fonts.secondary[600],
-            color: colors.textPrimary,
+            color: colors.black,
           }}>
           {label}
         </Text>
@@ -149,8 +149,33 @@ export default function Bayar({ navigation, route }) {
     );
   };
 
+
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: "Cool Photo App Camera Permission",
+          message:
+            "Cool Photo App needs access to your camera " +
+            "so you can take awesome pictures.",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK"
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can use the camera");
+      } else {
+        console.log("Camera permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   const simpan = () => {
-    setLoading(true);
+    // setLoading(true);
     console.log('kirim ke server', data);
     setTimeout(() => {
       axios
@@ -170,6 +195,7 @@ export default function Bayar({ navigation, route }) {
 
 
   useEffect(() => {
+    requestCameraPermission();
     axios.post(urlAPI + '/1data_bank.php').then(res => {
       console.log(res.data);
       setBank(res.data);
@@ -180,7 +206,6 @@ export default function Bayar({ navigation, route }) {
       <SafeAreaView
         style={{
           padding: 10,
-          backgroundColor: colors.background1,
           flex: 1,
         }}>
 
@@ -268,7 +293,7 @@ export default function Bayar({ navigation, route }) {
 
         </View>}
 
-        {open && <View style={{ flex: 1, backgroundColor: colors.background1, marginVertical: 10, }}>
+        {open && <View style={{ flex: 1, backgroundColor: colors.white, marginVertical: 10, }}>
           <View
             style={{
               flexDirection: 'row',
@@ -278,7 +303,7 @@ export default function Bayar({ navigation, route }) {
             <Text
               style={{
                 flex: 1,
-                color: colors.textPrimary,
+                color: colors.black,
                 fontFamily: fonts.secondary[400],
                 padding: 10,
               }}>
@@ -286,16 +311,16 @@ export default function Bayar({ navigation, route }) {
             </Text>
             <TouchableOpacity onPress={() => setOpen(false)} style={{
               padding: 10,
-              backgroundColor: colors.primary,
+              backgroundColor: colors.secondary,
               flexDirection: 'row'
             }}>
-              <Icon type='ionicon' name='search' size={windowWidth / 30} color={colors.textPrimary} />
+              <Icon type='ionicon' name='search' size={windowWidth / 30} color={colors.primary} />
               <Text style={{
-                color: colors.textPrimary,
+                color: colors.black,
                 left: 2,
                 fontFamily: fonts.secondary[600],
                 fontSize: windowWidth / 30,
-
+                color: colors.primary
               }}>Pilih Bank</Text>
             </TouchableOpacity>
           </View>
@@ -308,7 +333,7 @@ export default function Bayar({ navigation, route }) {
             <Text
               style={{
                 flex: 1,
-                color: colors.textPrimary,
+                color: colors.black,
                 fontFamily: fonts.secondary[400],
                 padding: 10,
               }}>
@@ -330,7 +355,7 @@ export default function Bayar({ navigation, route }) {
             <Text
               style={{
                 flex: 1,
-                color: colors.textPrimary,
+                color: colors.black,
                 fontSize: windowWidth / 30,
                 fontFamily: fonts.secondary[400],
                 padding: 10,
@@ -339,7 +364,7 @@ export default function Bayar({ navigation, route }) {
             </Text>
             <Text
               style={{
-                color: colors.textPrimary,
+                color: colors.black,
                 fontSize: windowWidth / 30,
                 fontFamily: fonts.secondary[600],
                 padding: 10,
@@ -356,7 +381,7 @@ export default function Bayar({ navigation, route }) {
             <Text
               style={{
                 flex: 1,
-                color: colors.textPrimary,
+                color: colors.black,
                 fontSize: windowWidth / 30,
                 fontFamily: fonts.secondary[400],
                 padding: 10,
@@ -365,7 +390,7 @@ export default function Bayar({ navigation, route }) {
             </Text>
             <Text
               style={{
-                color: colors.textPrimary,
+                color: colors.black,
                 fontSize: windowWidth / 30,
                 fontFamily: fonts.secondary[600],
                 padding: 10,
@@ -382,7 +407,7 @@ export default function Bayar({ navigation, route }) {
             <Text
               style={{
                 flex: 1,
-                color: colors.textPrimary,
+                color: colors.black,
                 fontSize: 16,
                 fontFamily: fonts.secondary[400],
                 padding: 10,
@@ -391,7 +416,7 @@ export default function Bayar({ navigation, route }) {
             </Text>
             <Text
               style={{
-                color: colors.textPrimary,
+                color: colors.primary,
                 fontSize: 20,
                 fontFamily: fonts.secondary[600],
                 padding: 10,

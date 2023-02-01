@@ -9,9 +9,7 @@ import {
   ScrollView,
   Dimensions,
   ImageBackground,
-  BackHandler,
   SafeAreaView,
-  Alert,
 } from 'react-native';
 import { colors } from '../../utils/colors';
 import { fonts } from '../../utils/fonts';
@@ -31,7 +29,7 @@ export default function Login({ navigation }) {
   const [show, setShow] = useState(true);
   const [token, setToken] = useState('');
   const [data, setData] = useState({
-    telepon: '',
+    email: '',
     password: '',
   });
 
@@ -40,40 +38,17 @@ export default function Login({ navigation }) {
       console.log('data token,', res);
       setToken(res.token);
     });
-
-    // const backAction = () => {
-    //   Alert.alert("TMP Mart", "Apakah kamu yakin akan keluar aplikasi ?", [
-    //     {
-    //       text: "Cancel",
-    //       onPress: () => null,
-    //       style: "cancel"
-    //     },
-    //     { text: "YES", onPress: () => BackHandler.exitApp() }
-    //   ]);
-    //   return true;
-    // };
-
-    // const backHandler = BackHandler.addEventListener(
-    //   "hardwareBackPress",
-    //   backAction
-    // );
-
-    // return () => backHandler.remove();
-
-
   }, []);
-
-
 
   // login ok
   const masuk = () => {
-    if (data.telepon.length === 0 && data.password.length === 0) {
+    if (data.email.length === 0 && data.password.length === 0) {
       showMessage({
-        message: 'Maaf telepon dan Password masih kosong !',
+        message: 'Maaf email dan Password masih kosong !',
       });
-    } else if (data.telepon.length === 0) {
+    } else if (data.email.length === 0) {
       showMessage({
-        message: 'Maaf telepon masih kosong !',
+        message: 'Maaf email masih kosong !',
       });
     } else if (data.password.length === 0) {
       showMessage({
@@ -111,54 +86,54 @@ export default function Login({ navigation }) {
     }
   };
   return (
-    <SafeAreaView style={{
-      flex: 1,
-      backgroundColor: colors.white,
-    }}>
+    <ImageBackground style={styles.page}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{
           flex: 1,
-          padding: 10,
+          marginTop: 20,
         }}>
         <View
           style={{
+            height: 220,
             flex: 1,
+            justifyContent: 'center',
             alignItems: 'center',
+
+            padding: 10,
+            borderRadius: 10,
           }}>
           <Image
-            source={require('../../assets/logo2.png')}
+            source={require('../../assets/logo.png')}
             style={{
-              width: '85%',
-              resizeMode: 'contain'
+              resizeMode: 'contain',
+              width: 200,
               // aspectRatio: 1,
             }}
           />
-          <Text
-            style={{
-              marginVertical: 20,
-              fontFamily: fonts.secondary[400],
-              fontSize: windowWidth / 25,
-              color: colors.textPrimary,
-              textAlign: 'center'
-            }}>
-            Ditokoku.id adalah aplikasi yang borfokus pada penjualan foto digital.
-          </Text>
         </View>
         <View style={styles.page}>
-
+          <Text
+            style={{
+              fontFamily: fonts.secondary[400],
+              fontSize: windowWidth / 20,
+              color: colors.black,
+              // maxWidth: 230,
+              textAlign: 'center',
+            }}>
+            Silahkan login untuk masuk ke aplikasi
+          </Text>
 
           <MyGap jarak={20} />
           <MyInput
-            label="Nomor Telepon"
-            iconname="call"
-            placeholder="Masukan nomor telepon"
-            value={data.telepon}
-            keyboardType="phone-pad"
+            label="Email"
+            iconname="mail"
+            placeholder="Masukan email anda"
+            value={data.email}
             onChangeText={value =>
               setData({
                 ...data,
-                telepon: value,
+                email: value,
               })
             }
           />
@@ -167,7 +142,7 @@ export default function Login({ navigation }) {
           <MyInput
             label="Password"
             iconname="key"
-            placeholder="Masukan password"
+            placeholder="Masukan password anda"
             secureTextEntry={show}
             onChangeText={value =>
               setData({
@@ -188,21 +163,22 @@ export default function Login({ navigation }) {
             />
           )}
 
-          <TouchableOpacity onPress={() => navigation.navigate('Register')} style={{
-            padding: 10,
+          {/* <TouchableOpacity onPress={() => {
+            navigation.navigate('Add');
+          }} style={{
+            paddingHorizontal: 5,
+            paddingVertical: 10,
             justifyContent: 'center',
-            alignItems: 'center'
-          }}><Text style={{
-            fontSize: windowWidth / 28,
-            marginTop: 10,
-            fontFamily: fonts.primary[600],
-            textAlign: 'center',
-            color: colors.primary
-          }}>Belum memiliki akun ? <Text style={{
-            color: colors.secondary
-          }}>daftar disini</Text></Text></TouchableOpacity>
+            alignItems: 'center',
+            flexDirection: 'row'
+          }}>
+            <Text style={{
+              left: 5,
+              fontFamily: fonts.secondary[600],
+              fontSize: windowWidth / 30
+            }}>Lupa Password ?</Text>
+          </TouchableOpacity> */}
         </View>
-
       </ScrollView>
       {
         loading && (
@@ -214,15 +190,15 @@ export default function Login({ navigation }) {
           />
         )
       }
-    </SafeAreaView >
+    </ImageBackground >
   );
 }
 
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    paddingHorizontal: 10,
-    backgroundColor: colors.background1,
+    backgroundColor: colors.white,
+    padding: 10,
   },
   image: {
     aspectRatio: 1.5,

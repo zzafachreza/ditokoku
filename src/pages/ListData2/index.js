@@ -56,50 +56,42 @@ export default function ({ navigation, route }) {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => navigation.navigate('ListDetail', item)}
+      // onPress={() => navigation.navigate('ListDetail', item)}
       style={{
         padding: 10,
         margin: 10,
-        backgroundColor: colors.background1,
+        backgroundColor: 'white',
         elevation: 1,
       }}>
       <View style={{ flexDirection: 'row', padding: 10 }}>
-        <View style={{
-          flex: 1,
-        }}>
-          <Text
-            style={{
-              flex: 1,
-              fontSize: windowWidth / 30,
-              color: colors.textPrimary,
-              fontFamily: fonts.secondary[600],
-            }}>
-            {item.kode}
-          </Text>
-          <Text
-            style={{
-              flex: 1,
-              fontSize: windowWidth / 30,
-              color: colors.textPrimary,
-              fontFamily: fonts.secondary[600],
-            }}>
-            {item.tanggal}
-          </Text>
-        </View>
-        <View style={{
-          flex: 1,
-        }}>
-          <Text
-            style={{
-              fontSize: windowWidth / 35,
-              // color: colors.white,
-              textAlign: 'center',
-              color: colors.textPrimary,
-              fontFamily: fonts.secondary[600],
-            }}>
-            {item.status}
-          </Text>
-        </View>
+        <Text
+          style={{
+            flex: 1,
+            fontSize: windowWidth / 30,
+            color: colors.primary,
+            fontFamily: fonts.secondary[600],
+          }}>
+          {item.kode}
+        </Text>
+        <Text
+          style={{
+            flex: 1,
+            fontSize: windowWidth / 30,
+            color: colors.black,
+            fontFamily: fonts.secondary[600],
+          }}>
+          {item.tanggal}
+        </Text>
+        <Text
+          style={{
+            fontSize: windowWidth / 30,
+            color: colors.white,
+            paddingHorizontal: 10,
+            backgroundColor: item.status_transaksi == "OPEN" ? colors.danger : item.status_transaksi == "EXPIRED" ? colors.border : colors.success,
+            fontFamily: fonts.secondary[600],
+          }}>
+          {item.status_transaksi}
+        </Text>
       </View>
 
       <View
@@ -107,11 +99,58 @@ export default function ({ navigation, route }) {
           flexDirection: 'row',
           padding: 10,
           borderTopWidth: 1,
-          borderTopColor: colors.primary,
+          borderTopColor: colors.tertiary,
         }}>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            // flex: 1,
+          }}>
+          <Text
+            style={{
+              fontSize: windowWidth / 30,
+              fontFamily: fonts.secondary[600],
+              color: colors.black,
+            }}>
+            {item.nama_lengkap}
+          </Text>
+          <Text
+            style={{
+              fontSize: windowWidth / 30,
+              textAlign: 'center',
+              color: colors.primary,
+            }}>
+            {item.posisi}
+          </Text>
+        </View>
 
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
 
-
+            flex: 1,
+          }}>
+          <Text
+            style={{
+              fontSize: windowWidth / 30,
+              fontFamily: fonts.secondary[600],
+              color: colors.primary,
+              paddingHorizontal: 10,
+            }}>
+            Component
+          </Text>
+          <Text
+            style={{
+              fontSize: windowWidth / 25,
+              fontFamily: fonts.secondary[600],
+              textAlign: 'center',
+              color: colors.secondary,
+            }}>
+            {item.nama_component}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -127,7 +166,6 @@ export default function ({ navigation, route }) {
       }
       style={{
         padding: 10,
-        backgroundColor: colors.background1,
       }}>
       <FlatList
         data={data}

@@ -55,9 +55,6 @@ import {
   AddSatu,
   AddDua,
   Kuis,
-  Wishlist,
-  BarangDetail,
-  BarangEdit,
 } from '../pages';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigator } from '../components';
@@ -71,13 +68,10 @@ const MainApp = () => {
   return (
     <Tab.Navigator tabBar={props => <BottomNavigator {...props} />}>
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Suggest" component={Add} />
-
-      <Tab.Screen name="Produk" component={Barang} />
-
-      <Tab.Screen name="Favorit" component={Wishlist} />
-
       <Tab.Screen name="History" component={ListData} />
+
+      {/* <Tab.Screen name="Notifikasi" component={Notifikasi} /> */}
+      <Tab.Screen name="Account" component={Account} />
     </Tab.Navigator>
   );
 };
@@ -100,16 +94,6 @@ export default function Router() {
           headerShown: false,
         }}
       />
-
-      <Stack.Screen
-        name="BarangDetail"
-        component={BarangDetail}
-        options={{
-          headerShown: false,
-        }}
-      />
-
-
       <Stack.Screen
         name="GetStarted"
         component={GetStarted}
@@ -365,7 +349,6 @@ export default function Router() {
         name="Register"
         component={Register}
         options={{
-          headerShown: false,
           headerTitle: 'Register',
           headerTintColor: 'white',
           headerStyle: {
@@ -544,9 +527,9 @@ export default function Router() {
         component={Cart}
         options={({ route, navigation }) => ({
           title: 'Keranjang',
-          headerTintColor: colors.black,
+          headerTintColor: 'white',
           headerStyle: {
-            backgroundColor: colors.white,
+            backgroundColor: colors.primary,
             elevation: 0, // remove shadow on Android
           },
           cardStyleInterpolator: ({ current, layouts }) => {
@@ -571,9 +554,9 @@ export default function Router() {
         component={Checkout}
         options={({ route, navigation }) => ({
           title: 'Checkout',
-          headerTintColor: colors.black,
+          headerTintColor: 'white',
           headerStyle: {
-            backgroundColor: colors.white,
+            backgroundColor: colors.primary,
             elevation: 0, // remove shadow on Android
           },
           cardStyleInterpolator: ({ current, layouts }) => {
@@ -650,25 +633,29 @@ export default function Router() {
       <Stack.Screen
         name="Barang"
         component={Barang}
-        options={{
-          headerShown: false
-        }}
-      />
-
-      <Stack.Screen
-        name="BarangEdit"
-        component={BarangEdit}
-        options={{
-          headerShown: false
-        }}
-      />
-
-      <Stack.Screen
-        name="Account"
-        component={Account}
-        options={{
-          headerShown: false
-        }}
+        options={({ route, navigation }) => ({
+          title: 'Detail Barang',
+          headerShown: false,
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+          cardStyleInterpolator: ({ current, layouts }) => {
+            return {
+              cardStyle: {
+                transform: [
+                  {
+                    translateX: current.progress.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [layouts.screen.width, 0],
+                    }),
+                  },
+                ],
+              },
+            };
+          },
+        })}
       />
 
       <Stack.Screen
@@ -788,9 +775,9 @@ export default function Router() {
         component={EditProfile}
         options={({ route, navigation }) => ({
           title: 'Edit Profile',
-          headerTintColor: colors.black,
+          headerTintColor: colors.white,
           headerStyle: {
-            backgroundColor: colors.white,
+            backgroundColor: colors.primary,
             elevation: 0, // remove shadow on Android
           },
           cardStyleInterpolator: ({ current, layouts }) => {
@@ -840,8 +827,7 @@ export default function Router() {
         name="ListData"
         component={ListData}
         options={({ route, navigation }) => ({
-          title: 'RIWAYAT TRANSAKSI',
-          headerShown: false,
+          title: 'HISTORY TRANSAKSI',
           headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,
@@ -867,10 +853,10 @@ export default function Router() {
         name="ListData2"
         component={ListData2}
         options={({ route, navigation }) => ({
-          title: 'LIST PESANAN',
-          headerTintColor: colors.black,
+          title: 'HISTORY IZIN / SAKIT / CUTI',
+          headerTintColor: colors.white,
           headerStyle: {
-            backgroundColor: colors.white,
+            backgroundColor: colors.primary,
             elevation: 0, // remove shadow on Android
           },
           cardStyleInterpolator: ({ current, layouts }) => {
@@ -949,9 +935,9 @@ export default function Router() {
         component={ListDetail}
         options={({ route, navigation }) => ({
           title: 'LIST DETAIL',
-          headerTintColor: colors.black,
+          headerTintColor: 'white',
           headerStyle: {
-            backgroundColor: colors.white,
+            backgroundColor: colors.primary,
             elevation: 0, // remove shadow on Android
           },
           cardStyleInterpolator: ({ current, layouts }) => {

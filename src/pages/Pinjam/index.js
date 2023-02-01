@@ -81,14 +81,14 @@ export default function Pinjam({ navigation, route }) {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: colors.background1,
+        backgroundColor: colors.white,
       }}>
       <View
         style={{
           height: 50,
           // padding: 10,
           paddingRight: 10,
-          backgroundColor: colors.background1,
+          backgroundColor: colors.primary,
 
           flexDirection: 'row',
         }}>
@@ -117,7 +117,7 @@ export default function Pinjam({ navigation, route }) {
       <View
         style={{
           flex: 1,
-          backgroundColor: colors.background1,
+          padding: 10,
         }}>
         <Image
 
@@ -132,7 +132,7 @@ export default function Pinjam({ navigation, route }) {
 
         <View
           style={{
-            backgroundColor: colors.background1,
+            backgroundColor: colors.white,
             flex: 1,
           }}>
           <View
@@ -151,7 +151,7 @@ export default function Pinjam({ navigation, route }) {
               style={{
                 fontFamily: fonts.secondary[600],
                 fontSize: windowWidth / 20,
-                color: colors.textSecondary,
+                color: colors.primary,
               }}>
               {item.nama_barang}
             </Text>
@@ -174,7 +174,7 @@ export default function Pinjam({ navigation, route }) {
         scrollViewProps={{ showsVerticalScrollIndicator: false }}
         snapPoint={255}
         HeaderComponent={
-          <View style={{ padding: 10, backgroundColor: colors.background1, }}>
+          <View style={{ padding: 10 }}>
             <View style={{ flexDirection: 'row' }}>
 
               <View style={{ flex: 1, padding: 10, justifyContent: 'center' }}>
@@ -182,7 +182,7 @@ export default function Pinjam({ navigation, route }) {
                   style={{
                     fontFamily: fonts.secondary[400],
                     fontSize: windowWidth / 35,
-                    color: colors.textPrimary,
+                    color: colors.black,
                   }}>
                   {item.nama_barang}
                 </Text>
@@ -190,27 +190,27 @@ export default function Pinjam({ navigation, route }) {
                   style={{
                     fontFamily: fonts.secondary[600],
                     fontSize: 20,
-                    color: colors.textPrimary,
+                    color: colors.black,
                   }}>
                   Rp. {new Intl.NumberFormat().format(item.harga_barang * jumlah)}
                 </Text>
               </View>
               <TouchableOpacity onPress={() => modalizeRef.current.close()}>
-                <Icon type="ionicon" name="close-outline" size={35} color={colors.textPrimary} />
+                <Icon type="ionicon" name="close-outline" size={35} />
               </TouchableOpacity>
             </View>
           </View>
         }
 
         ref={modalizeRef}>
-        <View style={{ flex: 1, height: windowWidth / 2, backgroundColor: colors.background1 }}>
+        <View style={{ flex: 1, height: windowWidth / 2 }}>
           <View style={{ padding: 10, flex: 1 }}>
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
               <View style={{ flex: 1 }}>
                 <Text
                   style={{
                     fontFamily: fonts.secondary[600],
-                    color: colors.textPrimary,
+                    color: colors.black,
                   }}>
                   Jumlah
                 </Text>
@@ -247,7 +247,7 @@ export default function Pinjam({ navigation, route }) {
                     alignItems: 'center',
                   }}>
                   <Text
-                    style={{ fontSize: 16, fontFamily: fonts.secondary[600], color: colors.textPrimary }}>
+                    style={{ fontSize: 16, fontFamily: fonts.secondary[600] }}>
                     {jumlah}
                   </Text>
                 </View>
@@ -279,7 +279,7 @@ export default function Pinjam({ navigation, route }) {
               <TouchableOpacity
                 onPress={addToCart}
                 style={{
-                  backgroundColor: colors.primary,
+                  backgroundColor: colors.secondary,
                   borderRadius: 10,
                   padding: 15,
                   justifyContent: 'center',

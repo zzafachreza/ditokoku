@@ -15,7 +15,7 @@ import {
 import { getData, storeData, urlAPI } from '../../utils/localStorage';
 import axios from 'axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { MyButton, MyGap, MyInput, MyPicker } from '../../components';
+import { MyButton, MyInput, MyPicker } from '../../components';
 import { colors } from '../../utils/colors';
 import { TouchableOpacity, Swipeable } from 'react-native-gesture-handler';
 import { fonts, windowHeight, windowWidth } from '../../utils/fonts';
@@ -26,7 +26,6 @@ import 'intl/locale-data/jsonp/en';
 import { showMessage } from 'react-native-flash-message';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { Modalize } from 'react-native-modalize';
-import MyCarouser from '../../components/MyCarouser';
 
 export default function Cart({ navigation, route }) {
   const [user, setUser] = useState({});
@@ -81,78 +80,11 @@ export default function Cart({ navigation, route }) {
     }
   }, [isFocused]);
 
-  const kirimServer = () => {
-    setLoading(true);
-
-    getData('user').then(res => {
-
-      const dd = {
-        fid_user: res.id,
-        harga_total: sub,
-        berat_total: beratTotal
-      }
-
-      setTimeout(() => {
-        setLoading(false);
-        navigation.navigate('Checkout', dd)
-      }, 1500)
-
-
-      // console.log(dd);
-      // axios.post(urlAPI + '/1add_transaksi.php', dd).then(rr => {
-      //   console.log(rr.data);
-      //   setTimeout(() => {
-      //     setLoading(false);
-      //     showMessage({
-      //       type: 'success',
-      //       message: 'Transaksi kamu berhasil dikirim'
-      //     })
-      //     navigation.replace('ListData')
-      //   }, 1500)
-      // })
-
-
-    });
-  }
-
-
-  const kirimServer2 = () => {
-    setLoading(true);
-
-    getData('user').then(res => {
-
-      const dd = {
-        fid_user: res.id,
-        harga_total: sub,
-        berat_total: beratTotal
-      }
-
-
-
-
-      console.log(dd);
-      axios.post(urlAPI + '/1add_transaksi2.php', dd).then(rr => {
-        console.log(rr.data);
-        setTimeout(() => {
-          setLoading(false);
-          showMessage({
-            type: 'success',
-            message: 'Transaksi kamu berhasil dikirim'
-          })
-          navigation.replace('ListData2')
-        }, 1500)
-      })
-
-
-    });
-  }
-
   const __getDataBarang = (zz) => {
     axios.post(urlAPI + '/cart.php', {
       fid_user: zz
     }).then(x => {
       setData(x.data);
-      console.log(x.data);
     })
 
   }
@@ -184,11 +116,8 @@ export default function Cart({ navigation, route }) {
     return (
 
       <View style={{
-        backgroundColor: colors.background1,
+        backgroundColor: colors.white,
         marginVertical: 3,
-        borderBottomWidth: 1,
-        borderBottomColor: colors.zavalabs,
-        paddingBottom: 5,
       }}>
         <View
           style={{
@@ -213,7 +142,6 @@ export default function Cart({ navigation, route }) {
               style={{
                 fontFamily: fonts.secondary[600],
                 fontSize: windowWidth / 30,
-                color: colors.textPrimary
               }}>
               {item.nama_barang}
             </Text>
@@ -223,19 +151,8 @@ export default function Cart({ navigation, route }) {
                 fontFamily: fonts.secondary[400],
                 flex: 1,
                 fontSize: windowWidth / 30,
-                color: colors.black
               }}>
-              {item.qty} {item.uom}
-            </Text>
-            <Text
-              style={{
-                fontFamily: fonts.secondary[400],
-                flex: 1,
-                fontStyle: "italic",
-                fontSize: windowWidth / 35,
-                color: colors.border
-              }}>
-              {item.note}
+              {new Intl.NumberFormat().format(item.harga)} x {item.qty}
             </Text>
           </View>
 
@@ -248,55 +165,51 @@ export default function Cart({ navigation, route }) {
               style={{
                 fontFamily: fonts.secondary[600],
                 color: colors.black,
-                fontSize: windowWidth / 25,
-                textAlign: 'center'
+                fontSize: windowWidth / 20,
               }}>
-              {new Intl.NumberFormat().format(item.harga * item.qty)}
-
+              {new Intl.NumberFormat().format(item.total)}
             </Text>
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-end'
-            }}>
-
-              <TouchableOpacity
-                onPress={() => {
-                  setItem(item);
-                  navigation.navigate('BarangEdit', item)
-                  // modalizeRef.current.open();
-                }}
-                style={{
-                  marginHorizontal: 5,
-                }}>
-                <Icon type='ionicon' name='create' color={colors.primary} />
-              </TouchableOpacity>
-
-
-              <TouchableOpacity onPress={() => {
-
-
-                Alert.alert(
-                  "Apakah kamu yakin akan menghapus ini ?",
-                  item.nama_barang,
-                  [
-                    {
-                      text: "Cancel",
-                      onPress: () => console.log("Cancel Pressed"),
-                      style: "cancel"
-                    },
-                    { text: "OK", onPress: () => hanldeHapus(item.id) }
-                  ]
-                );
-
-              }} style={{
-                marginHorizontal: 5,
-              }}>
-                <Icon type='ionicon' name='trash' color={colors.danger} />
-              </TouchableOpacity>
-            </View>
           </View>
         </View>
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'flex-end'
+        }}>
 
+          <TouchableOpacity
+            onPress={() => {
+              setItem(item);
+              modalizeRef.current.open();
+            }}
+            style={{
+              marginHorizontal: 5,
+            }}>
+            <Icon type='ionicon' name='create' color={colors.primary} />
+          </TouchableOpacity>
+
+
+          <TouchableOpacity onPress={() => {
+
+
+            Alert.alert(
+              "Apakah kamu yakin akan menghapus ini ?",
+              item.nama_barang,
+              [
+                {
+                  text: "Cancel",
+                  onPress: () => console.log("Cancel Pressed"),
+                  style: "cancel"
+                },
+                { text: "OK", onPress: () => hanldeHapus(item.id) }
+              ]
+            );
+
+          }} style={{
+            marginHorizontal: 5,
+          }}>
+            <Icon type='ionicon' name='trash' color={colors.danger} />
+          </TouchableOpacity>
+        </View>
       </View >
 
     );
@@ -310,16 +223,126 @@ export default function Cart({ navigation, route }) {
     quality: 0.3,
   };
 
+  const getCamera = xyz => {
+    launchCamera(options, response => {
+      // console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('Image Picker Error: ', response.error);
+      } else {
+        let source = { uri: response.uri };
+        switch (xyz) {
+          case 1:
+            setfoto(`data:${response.type};base64, ${response.base64}`)
+            break;
+        }
+      }
+    });
+  };
 
+  const getGallery = xyz => {
+    launchImageLibrary(options, response => {
+      console.log('All Response = ', response);
+
+      console.log('Ukuran = ', response.fileSize);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('Image Picker Error: ', response.error);
+      } else {
+        if (response.fileSize <= 200000) {
+          let source = { uri: response.uri };
+          switch (xyz) {
+            case 1:
+              setfoto(`data:${response.type};base64, ${response.base64}`)
+              break;
+          }
+        } else {
+          showMessage({
+            message: 'Ukuran Foto Terlalu Besar Max 500 KB',
+            type: 'danger',
+          });
+        }
+      }
+    });
+  };
+
+  const UploadFoto = ({ onPress1, onPress2, label, foto }) => {
+    return (
+      <View
+        style={{
+          padding: 10,
+          backgroundColor: colors.white,
+          marginVertical: 10,
+          borderWidth: 1,
+          borderRadius: 10,
+          borderColor: colors.border,
+          elevation: 2,
+        }}>
+        <Text
+          style={{
+            fontFamily: fonts.secondary[600],
+            color: colors.black,
+          }}>
+          {label}
+        </Text>
+
+        <View
+          style={{
+            flexDirection: 'row',
+          }}>
+          <View style={{
+            flex: 2
+          }}>
+            <Image
+              source={{
+                uri: foto,
+              }}
+              style={{
+                width: '100%',
+                aspectRatio: 3,
+                resizeMode: 'contain',
+              }}
+            />
+          </View>
+          <View
+            style={{
+              flex: 1,
+              paddingRight: 5,
+            }}>
+            <MyButton
+              onPress={onPress1}
+              colorText={colors.white}
+              title="KAMERA"
+              warna={colors.primary}
+            />
+          </View>
+          <View
+            style={{
+              flex: 1,
+              paddingLeft: 5,
+            }}>
+            <MyButton
+              onPress={onPress2}
+              title="GALLERY"
+              colorText={colors.white}
+              warna={colors.secondary}
+            />
+          </View>
+
+        </View>
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView
       style={{
         flex: 1,
         // padding: 10,
-        backgroundColor: colors.background1,
       }}>
-      <MyGap jarak={10} />
+
       <FlatList data={data} renderItem={__renderItem} />
 
 
@@ -339,7 +362,14 @@ export default function Cart({ navigation, route }) {
                   }}>
                   {itemz.nama_barang}
                 </Text>
-
+                <Text
+                  style={{
+                    fontFamily: fonts.secondary[600],
+                    fontSize: 20,
+                    color: colors.black,
+                  }}>
+                  Rp. {new Intl.NumberFormat().format(itemz.harga * itemz.qty)}
+                </Text>
               </View>
               <TouchableOpacity onPress={() => modalizeRef.current.close()}>
                 <Icon type="ionicon" name="close-outline" size={35} />
@@ -451,49 +481,109 @@ export default function Cart({ navigation, route }) {
           </View>
         </View>
       </Modalize>
-
-      <View style={{
-        flexDirection: 'row',
-        paddingHorizontal: 10,
-      }}>
-        <Text style={{
-          fontFamily: fonts.secondary[400],
-          flex: 1,
-          fontSize: windowWidth / 25,
-          color: colors.black
-        }}>Total Transaksi</Text>
-        <Text style={{
-          fontFamily: fonts.secondary[600],
-          fontSize: windowWidth / 15,
-          color: colors.black
-        }}>   {new Intl.NumberFormat().format(sub)}</Text>
-      </View>
-      {loading && <View style={{
-        padding: 10
-      }}><ActivityIndicator size="large" color={colors.primary} /></View>}
       {!loading &&
         <View
           style={{
-            padding: 10,
             flexDirection: 'row',
+            justifyContent: 'space-between',
           }}>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: colors.white,
+              justifyContent: 'center',
+              alignItems: 'flex-start',
+            }}>
+            <Text
+              style={{
+                fontSize: windowWidth / 20,
+                fontFamily: fonts.secondary[600],
+                color: colors.black,
+                left: 10,
+              }}>
+              Rp. {new Intl.NumberFormat().format(sub)}
 
+            </Text>
+            <Text
+              style={{
+                fontSize: windowWidth / 20,
+                fontFamily: fonts.secondary[400],
+                color: colors.black,
+                left: 10,
+              }}>
+              {new Intl.NumberFormat().format(beratTotal)} gr
+            </Text>
 
-          <View style={{
-            flex: 1,
-            paddingRight: 5,
-          }}>
-            <MyButton warna={colors.secondary} onPress={kirimServer2} title="SIMPAN" Icons="bookmark" />
           </View>
+          <TouchableOpacity
+            onPress={() => {
 
-          <View style={{
-            flex: 1,
-            paddingLeft: 5,
-          }}>
-            <MyButton warna={colors.primary} onPress={kirimServer} title="ORDER KE TOKO" Icons="download" />
-          </View>
+              setLoading(true);
+
+              getData('user').then(res => {
+
+                const dd = {
+                  fid_user: res.id,
+                  harga_total: sub,
+                  berat_total: beratTotal
+                }
+
+                setTimeout(() => {
+                  setLoading(false);
+                  navigation.navigate('Checkout', dd)
+                }, 1500)
+
+
+                console.log(dd);
+                // axios.post(urlAPI + '/1add_transaksi.php', dd).then(rr => {
+                //   console.log(rr.data);
+
+                //   setTimeout(() => {
+                //     setLoading(false);
+                //     showMessage({
+                //       type: 'success',
+                //       message: 'Transaksi kamu berhasil dikirim'
+                //     })
+                //     navigation.replace('ListData')
+                //   }, 1500)
+
+
+                // })
+
+
+              });
+
+
+
+            }}
+            style={{
+
+              backgroundColor: colors.primary,
+              padding: 15,
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row'
+            }}>
+            <Icon type='ionicon' name="open-outline" color={colors.white} size={windowWidth / 20} />
+            <Text
+              style={{
+                fontSize: windowWidth / 20,
+                left: 5,
+                fontFamily: fonts.secondary[600],
+                color: colors.white,
+
+              }}>
+              CHECKOUT
+            </Text>
+          </TouchableOpacity>
+
 
         </View>}
+
+
+      {loading && <View style={{
+        padding: 10
+      }}><ActivityIndicator size="large" color={colors.primary} /></View>}
 
     </SafeAreaView>
   );

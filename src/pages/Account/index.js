@@ -49,42 +49,30 @@ export default function Account({ navigation, route }) {
   };
 
   return (
-    <SafeAreaView style={{
-      flex: 1,
-      backgroundColor: colors.background1,
-    }}>
+    <SafeAreaView>
       <View style={{ padding: 10 }}>
-
+        <View style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <Image source={{
+            uri: user.foto_user,
+          }} style={{ width: 80, height: 80, borderRadius: 10, }} />
+        </View>
 
         {/* data detail */}
         <View style={{ padding: 10 }}>
-
+          <MyButton
+            onPress={() => navigation.navigate('EditProfile', user)}
+            title="Edit Profile"
+            colorText={colors.white}
+            iconColor={colors.white}
+            warna={colors.secondary}
+            Icons="create-outline"
+          />
 
           <MyGap jarak={10} />
           <View>
-            {/* <View
-              style={{
-                marginVertical: 3,
-                padding: 10,
-                backgroundColor: colors.white,
-                borderRadius: 10,
-              }}>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[600],
-                  color: colors.black,
-                }}>
-                Customer ID
-              </Text>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[400],
-                  color: colors.primary,
-                }}>
-                {user.id_customer}
-              </Text>
-            </View>
-
             <View
               style={{
                 marginVertical: 3,
@@ -97,54 +85,7 @@ export default function Account({ navigation, route }) {
                   fontFamily: fonts.secondary[600],
                   color: colors.black,
                 }}>
-                Nama Toko
-              </Text>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[400],
-                  color: colors.primary,
-                }}>
-                {user.nama_toko}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                marginVertical: 3,
-                padding: 10,
-                backgroundColor: colors.white,
-                borderRadius: 10,
-              }}>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[600],
-                  color: colors.black,
-                }}>
-                Alamat Toko
-              </Text>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[400],
-                  color: colors.primary,
-                }}>
-                {user.alamat_toko}
-              </Text>
-            </View> */}
-
-
-            <View
-              style={{
-                marginVertical: 3,
-                padding: 10,
-                backgroundColor: colors.white,
-                borderRadius: 10,
-              }}>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[600],
-                  color: colors.black,
-                }}>
-                Nama Lengkap
+                Nama Pribadi
               </Text>
               <Text
                 style={{
@@ -156,7 +97,28 @@ export default function Account({ navigation, route }) {
             </View>
 
 
-
+            <View
+              style={{
+                marginVertical: 3,
+                padding: 10,
+                backgroundColor: colors.white,
+                borderRadius: 10,
+              }}>
+              <Text
+                style={{
+                  fontFamily: fonts.secondary[600],
+                  color: colors.black,
+                }}>
+                E-mail
+              </Text>
+              <Text
+                style={{
+                  fontFamily: fonts.secondary[400],
+                  color: colors.primary,
+                }}>
+                {user.email}
+              </Text>
+            </View>
             <View
               style={{
                 marginVertical: 3,
@@ -179,7 +141,28 @@ export default function Account({ navigation, route }) {
                 {user.telepon}
               </Text>
             </View>
-
+            <View
+              style={{
+                marginVertical: 3,
+                padding: 10,
+                backgroundColor: colors.white,
+                borderRadius: 10,
+              }}>
+              <Text
+                style={{
+                  fontFamily: fonts.secondary[600],
+                  color: colors.black,
+                }}>
+                Kota - Provinsi
+              </Text>
+              <Text
+                style={{
+                  fontFamily: fonts.secondary[400],
+                  color: colors.primary,
+                }}>
+                {user.nama_kota} - {user.nama_provinsi}
+              </Text>
+            </View>
             <View
               style={{
                 marginVertical: 3,
@@ -211,33 +194,15 @@ export default function Account({ navigation, route }) {
         </View>
 
         {/* button */}
-        <View style={{ padding: 10, flexDirection: 'row' }}>
-          <View style={{
-            flex: 1,
-            paddingRight: 5,
-          }}>
-            <MyButton
-              onPress={() => navigation.navigate('EditProfile', user)}
-              title="Edit Profile"
-              colorText={colors.white}
-              iconColor={colors.white}
-              warna={colors.secondary}
-              Icons="create-outline"
-            />
-          </View>
-          <View style={{
-            flex: 1,
-            paddingLeft: 5,
-          }}>
-            <MyButton
-              onPress={btnKeluar}
-              title="Keluar"
-              colorText={colors.white}
-              iconColor={colors.white}
-              warna={colors.primary}
-              Icons="log-out-outline"
-            />
-          </View>
+        <View style={{ padding: 10 }}>
+          <MyButton
+            onPress={btnKeluar}
+            title="Keluar"
+            colorText={colors.white}
+            iconColor={colors.white}
+            warna={colors.primary}
+            Icons="log-out-outline"
+          />
         </View>
       </View>
     </SafeAreaView>

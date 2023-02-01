@@ -44,9 +44,6 @@ import Add2 from './Add2';
 import AddSatu from './AddSatu';
 import AddDua from './AddDua';
 import Kuis from './Kuis';
-import Wishlist from './Wishlist';
-import BarangDetail from './BarangDetail';
-import BarangEdit from './BarangEdit';
 
 
 
@@ -103,7 +100,4 @@ export {
   Hadiah,
   Redeem,
   ListRedeem,
-  Wishlist,
-  BarangDetail,
-  BarangEdit
 };

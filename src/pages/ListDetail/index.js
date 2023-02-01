@@ -59,7 +59,7 @@ export default function ListDetail({ navigation, route }) {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: colors.background2
+        backgroundColor: colors.border
       }}>
 
       {!buka && <View style={{
@@ -71,32 +71,74 @@ export default function ListDetail({ navigation, route }) {
       </View>}
       {buka &&
         <ScrollView showsVerticalScrollIndicator={false} style={{ padding: 10, flex: 1 }}>
+          <View style={{
+            backgroundColor: colors.white,
+            marginVertical: 5,
+          }}>
 
-          {item.status !== 'PENDING' && (
             <View style={{
-              backgroundColor: colors.white,
-              marginVertical: 5,
+              flexDirection: 'row'
             }}>
+              <Text
+                style={{
+                  flex: 1,
+                  fontFamily: fonts.secondary[600],
+                  padding: 10,
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+                  borderBottomWidth: 1,
+                  borderBottomColor: colors.border
+                }}>
+                {item.status}
+              </Text>
 
-              <View style={{
-                flexDirection: 'row'
-              }}>
-                <Text
-                  style={{
-                    flex: 1,
+              {item.status == 'MENUNGGU PEMBAYARAN' && (
+                <TouchableOpacity onPress={() => {
+                  navigation.navigate('Bayar', {
+                    kode: item.kode,
+                    total_bayar: item.total_bayar
+                  })
+                }} style={{
+                  padding: 10,
+                  backgroundColor: colors.secondary,
+                  flexDirection: 'row'
+                }}>
+                  <Icon type='ionicon' name='checkmark-circle' size={windowWidth / 30} color={colors.white} />
+                  <Text style={{
+                    left: 5,
                     fontFamily: fonts.secondary[600],
-                    padding: 10,
                     fontSize: windowWidth / 30,
-                    color: colors.black,
-                    borderBottomWidth: 1,
-                    borderBottomColor: colors.border
-                  }}>
-                  {item.status}
-                </Text>
+                    color: colors.white,
+                  }}>Bayar Sekarang</Text>
+                </TouchableOpacity>
 
+              )}
+            </View>
 
-              </View>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[400],
+                padding: 10,
+                fontSize: windowWidth / 30,
+                color: colors.black,
 
+              }}>
+              {item.kode}
+            </Text>
+            <View style={{
+              flexDirection: 'row'
+            }}>
+              <Text
+                style={{
+                  flex: 1,
+                  fontFamily: fonts.secondary[400],
+                  padding: 10,
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+
+                }}>
+                Tanggal Pembelian
+              </Text>
               <Text
                 style={{
                   fontFamily: fonts.secondary[400],
@@ -105,62 +147,12 @@ export default function ListDetail({ navigation, route }) {
                   color: colors.black,
 
                 }}>
-                {item.kode}
+                {item.tanggal}, {item.jam} WIB
               </Text>
-              <View style={{
-                flexDirection: 'row'
-              }}>
-                <Text
-                  style={{
-                    flex: 1,
-                    fontFamily: fonts.secondary[400],
-                    padding: 10,
-                    fontSize: windowWidth / 30,
-                    color: colors.black,
-
-                  }}>
-                  Tanggal Pembelian
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: fonts.secondary[400],
-                    padding: 10,
-                    fontSize: windowWidth / 30,
-                    color: colors.black,
-
-                  }}>
-                  {item.tanggal}, {item.jam} WIB
-                </Text>
-              </View>
-
-              <View style={{
-                flexDirection: 'row'
-              }}>
-                <Text
-                  style={{
-                    flex: 1,
-                    fontFamily: fonts.secondary[400],
-                    padding: 10,
-                    fontSize: windowWidth / 30,
-                    color: colors.black,
-
-                  }}>
-                  Metode Pembayaran
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: fonts.secondary[400],
-                    padding: 10,
-                    fontSize: windowWidth / 30,
-                    color: colors.black,
-
-                  }}>
-                  {item.metode}
-                </Text>
-              </View>
             </View>
+          </View>
 
-          )}
+
           <View style={{
             backgroundColor: colors.white,
             marginVertical: 5,
@@ -205,13 +197,7 @@ export default function ListDetail({ navigation, route }) {
                       fontFamily: fonts.secondary[400],
                       fontSize: windowWidth / 35,
                       color: colors.black,
-                    }}>Jumlah :  {new Intl.NumberFormat().format(i.qty)} {i.uom}</Text>
-                    <Text style={{
-                      fontFamily: fonts.secondary[400],
-                      fontSize: windowWidth / 35,
-                      color: colors.black,
-                      fontStyle: 'italic'
-                    }}>{i.note}</Text>
+                    }}> {new Intl.NumberFormat().format(i.qty)} x Rp. {new Intl.NumberFormat().format(i.harga)}</Text>
 
                   </View>
 
@@ -219,13 +205,11 @@ export default function ListDetail({ navigation, route }) {
                     justifyContent: 'center'
                   }}>
                     <Text style={{
-                      fontFamily: fonts.secondary[600],
-                      fontSize: windowWidth / 25,
+                      fontFamily: fonts.secondary[400],
+                      fontSize: windowWidth / 30,
                       color: colors.black,
-                      paddingHorizontal: 10,
-                      borderRadius: 5,
 
-                    }}>Rp. {new Intl.NumberFormat().format(i.total)}</Text>
+                    }}>  Rp. {new Intl.NumberFormat().format(i.total)}</Text>
                   </View>
                 </View>
               )
@@ -237,36 +221,250 @@ export default function ListDetail({ navigation, route }) {
             backgroundColor: colors.white,
             marginVertical: 5,
           }}>
+            <Text style={{
+              fontFamily: fonts.secondary[600],
+              fontSize: windowWidth / 30,
+              color: colors.black,
+              margin: 10,
+
+            }}>Informasi Pengiriman</Text>
 
 
             <View style={{
-              flexDirection: 'row'
+              flexDirection: 'row',
+              padding: 10,
             }}>
-              <Text
-                style={{
-                  flex: 1,
+              <View style={{
+                flex: 0.5,
+                justifyContent: 'center'
+              }}>
+                <Text style={{
                   fontFamily: fonts.secondary[400],
-                  padding: 10,
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+
+                }}>Kurir</Text>
+              </View>
+              <View style={{
+                flex: 1.5,
+                justifyContent: 'flex-start',
+              }}>
+                <Text style={{
+                  fontFamily: fonts.secondary[400],
                   fontSize: windowWidth / 30,
                   color: colors.black,
 
                 }}>
-                Total Transaksi
-              </Text>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[600],
-                  padding: 10,
-                  fontSize: windowWidth / 20,
+                  {item.nama_kurir} - {item.paket}
+                </Text>
+              </View>
+            </View>
+            <View style={{
+              flexDirection: 'row',
+              padding: 10,
+            }}>
+              <View style={{
+                flex: 0.5,
+                justifyContent: 'center'
+              }}>
+                <Text style={{
+                  fontFamily: fonts.secondary[400],
+                  fontSize: windowWidth / 30,
                   color: colors.black,
 
+                }}>No. Resi</Text>
+              </View>
+              <View style={{
+                flex: 1.5,
+                justifyContent: 'flex-start',
+                flexDirection: 'row'
+              }}>
+                <Text style={{
+                  fontFamily: fonts.secondary[400],
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+                  textAlign: 'left',
+                  flex: 1,
                 }}>
-                Rp. {new Intl.NumberFormat().format(item.total_harga)}
-              </Text>
+                  {item.nomor_resi}
+                </Text>
+
+                {item.status == 'SUDAH DIKIRIM' &&
+                  <TouchableOpacity onPress={() => navigation.navigate('Akses', {
+                    nomor_resi: item.nomor_resi,
+                    kode_kurir: item.kode_kurir
+                  })} style={{
+                    padding: 7,
+                    borderRadius: 2,
+                    backgroundColor: colors.tertiary,
+                    flexDirection: 'row'
+                  }}>
+                    <Icon type='ionicon' color={colors.black} name='search-outline' size={windowWidth / 30} />
+                    <Text style={{
+                      left: 2,
+                      color: colors.black,
+                      fontFamily: fonts.secondary[400],
+                      fontSize: windowWidth / 30,
+                    }}>Lacak Resi</Text>
+                  </TouchableOpacity>}
+              </View>
             </View>
+
+
+            <View style={{
+              flexDirection: 'row',
+              padding: 10,
+            }}>
+              <View style={{
+                flex: 0.5,
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start'
+              }}>
+                <Text style={{
+                  fontFamily: fonts.secondary[400],
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+
+                }}>Alamat</Text>
+              </View>
+              <View style={{
+                flex: 1.5,
+                justifyContent: 'flex-start',
+              }}>
+                <Text style={{
+                  fontFamily: fonts.secondary[600],
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+                  textAlign: 'left'
+                }}>
+                  {item.nama_lengkap}
+                </Text>
+                <Text style={{
+                  fontFamily: fonts.secondary[400],
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+                  textAlign: 'left'
+                }}>
+                  {item.telepon}
+                </Text>
+                <Text style={{
+                  fontFamily: fonts.secondary[400],
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+                  textAlign: 'left'
+                }}>
+                  {item.alamat} {item.nama_kota} {item.nama_provinsi}
+                </Text>
+              </View>
+            </View>
+
+
+
+
           </View>
 
+          <View style={{
+            backgroundColor: colors.white,
+            marginVertical: 5,
+          }}>
+            <Text style={{
+              fontFamily: fonts.secondary[600],
+              fontSize: windowWidth / 30,
+              color: colors.black,
+              margin: 10,
 
+            }}>Rincian Pembayaran</Text>
+            <View style={{
+              flexDirection: 'row',
+              padding: 10,
+            }}>
+
+              <View style={{
+                flex: 1,
+                justifyContent: 'center'
+              }}>
+                <Text style={{
+                  fontFamily: fonts.secondary[400],
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+
+                }}>Total Harga</Text>
+              </View>
+
+
+              <View style={{
+                justifyContent: 'center'
+              }}>
+                <Text style={{
+                  fontFamily: fonts.secondary[400],
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+
+                }}>   Rp. {new Intl.NumberFormat().format(item.total_harga)}</Text>
+              </View>
+            </View>
+
+
+            <View style={{
+              flexDirection: 'row',
+              padding: 10,
+            }}>
+
+              <View style={{
+                flex: 1,
+                justifyContent: 'center'
+              }}>
+                <Text style={{
+                  fontFamily: fonts.secondary[400],
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+
+                }}>Total Ongkos Kirim</Text>
+              </View>
+
+
+              <View style={{
+                justifyContent: 'center'
+              }}>
+                <Text style={{
+                  fontFamily: fonts.secondary[400],
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+
+                }}>  Rp. {new Intl.NumberFormat().format(item.total_ongkir)}</Text>
+              </View>
+            </View>
+
+            <View style={{
+              flexDirection: 'row',
+              padding: 10,
+            }}>
+
+              <View style={{
+                flex: 1,
+                justifyContent: 'center'
+              }}>
+                <Text style={{
+                  fontFamily: fonts.secondary[600],
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+
+                }}>Total Pembayaran</Text>
+              </View>
+
+
+              <View style={{
+                justifyContent: 'center'
+              }}>
+                <Text style={{
+                  fontFamily: fonts.secondary[600],
+                  fontSize: windowWidth / 25,
+                  color: colors.black,
+
+                }}>   Rp. {new Intl.NumberFormat().format(item.total_bayar)}</Text>
+              </View>
+            </View>
+          </View>
           <MyGap jarak={10} />
 
           {item.status == 'SUDAH DIKIRIM' && (<MyButton onPress={() => {
@@ -280,24 +478,7 @@ export default function ListDetail({ navigation, route }) {
               })
 
             })
-          }} title='Pesanan Selesai' warna={colors.primary} colorText={colors.white} Icons="checkmark-circle" iconColor={colors.white} />)}
-
-
-          {item.status == 'PENDING' && (<MyButton onPress={() => {
-
-
-
-            axios.post(urlAPI + '/1add_cart_new.php', {
-              kode: route.params.kode,
-              fid_user: route.params.fid_user
-            }).then(res => {
-              console.log(res.data);
-              navigation.navigate('Cart');
-            })
-
-          }} title='Masukan ke keranjang' warna={colors.primary} colorText={colors.white} Icons="checkmark-circle" iconColor={colors.white} />)}
-
-
+          }} title='Pesanan Selesai' warna={colors.secondary} colorText={colors.white} Icons="checkmark-circle" iconColor={colors.white} />)}
           <MyGap jarak={20} />
         </ScrollView>
       }
