@@ -23,6 +23,7 @@ import 'intl/locale-data/jsonp/en';
 import LottieView from 'lottie-react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { MyGap } from '../../components';
+import { Linking } from 'react-native';
 
 export default function Home({ navigation }) {
   const [user, setUser] = useState({});
@@ -84,6 +85,12 @@ export default function Home({ navigation }) {
 
 
   const __getDataUserInfo = () => {
+
+    axios.post(urlAPI + '/company.php').then(c => {
+      console.log('comp', c.data);
+      setComp(c.data);
+    })
+
     getData('user').then(users => {
       console.log(users);
       setUser(users);
@@ -108,6 +115,8 @@ export default function Home({ navigation }) {
       });
     });
   }
+
+  const [comp, setComp] = useState({});
 
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
@@ -329,14 +338,30 @@ export default function Home({ navigation }) {
 
           </TouchableOpacity>
 
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL('https://wa.me/' + comp.tlp);
+            }}
+            style={{
+              position: 'relative',
+              width: 40,
+              height: 40,
+              justifyContent: 'center',
+              alignItems: 'center'
 
+
+            }}>
+            <Icon type='ionicon' name="logo-whatsapp" color={colors.secondary} />
+
+
+          </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => navigation.navigate('Cart')}
             style={{
               position: 'relative',
-              width: 50,
-              height: 50,
+              width: 40,
+              height: 40,
               justifyContent: 'center',
               alignItems: 'center'
 
@@ -344,7 +369,7 @@ export default function Home({ navigation }) {
             }}>
             <Icon type='ionicon' name="cart-outline" color={colors.secondary} />
             <Text style={{
-              position: 'absolute', top: 2, right: 2, bottom: 5, backgroundColor: colors.primary, width: 18,
+              position: 'absolute', top: 0, right: 0, bottom: 0, backgroundColor: colors.primary, width: 18,
               textAlign: 'center',
               height: 18, borderRadius: 10, color: colors.secondary
             }} >{cart}</Text>
@@ -358,7 +383,7 @@ export default function Home({ navigation }) {
       <ScrollView style={{
         backgroundColor: colors.background1
       }}>
-        <MyGap jarak={10} />
+
         <MyCarouser />
 
         {/* list Kategoti */}
@@ -376,7 +401,7 @@ export default function Home({ navigation }) {
               color: colors.textPrimary,
               fontFamily: fonts.secondary[600],
               fontSize: windowWidth / 25,
-            }}>Kategori Produk Ditokoku</Text>
+            }}>Kategori Produk</Text>
           </View>
           <View style={{
             flex: 1,

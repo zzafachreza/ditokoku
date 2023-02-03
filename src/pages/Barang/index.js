@@ -45,7 +45,6 @@ export default function ({ navigation, route }) {
     axios.post(urlAPI + '/1data_barang.php', {
       key: route.params.key,
       key2: y,
-      id_user: route.params.id_user
     }).then(res => {
       setMykey('');
       console.warn(res.data);

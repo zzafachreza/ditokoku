@@ -39,7 +39,15 @@ export default function BottomNavigator({ state, descriptors, navigation }) {
           });
 
           if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
+            console.log(route.name);
+            if (route.name == 'Produk') {
+              navigation.navigate(route.name, {
+                key: 0,
+              })
+            } else {
+              navigation.navigate(route.name);
+            }
+
           }
         };
 
@@ -59,16 +67,17 @@ export default function BottomNavigator({ state, descriptors, navigation }) {
         } else if (label === 'Account') {
           iconName = 'person-outline';
           Newlabel = 'Akun';
-        } else if (label === 'Laporan') {
+        } else if (label === 'Produk') {
           iconName = 'grid-outline';
+          Newlabel = 'Produk';
         } else if (label === 'Asset') {
           iconName = 'pulse-outline';
         } else if (label === 'History') {
           iconName = 'file-tray-stacked-outline';
           Newlabel = 'History';
-        } else if (label === 'Whatsapp') {
-          iconName = 'call-outline';
-          Newlabel = 'Contact';
+        } else if (label === 'Wish') {
+          iconName = 'heart-outline';
+          Newlabel = 'Favorit';
         }
 
         return (

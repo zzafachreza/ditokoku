@@ -44,6 +44,7 @@ import Add2 from './Add2';
 import AddSatu from './AddSatu';
 import AddDua from './AddDua';
 import Kuis from './Kuis';
+import Wish from './Wish';
 
 
 
@@ -100,4 +101,5 @@ export {
   Hadiah,
   Redeem,
   ListRedeem,
+  Wish
 };

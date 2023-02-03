@@ -46,7 +46,8 @@ export default function Checkout({ navigation, route }) {
         ...kirim,
         destination: res.fid_kota,
         total_ongkir: 0,
-        harga_total: 0
+        harga_total: 0,
+        tipe_bayar: 'COD',
       })
     });
 
@@ -74,6 +75,11 @@ export default function Checkout({ navigation, route }) {
       showMessage({
         type: 'danger',
         message: 'Opsi pengiriman harus di isi !'
+      })
+    } else if (kirim.tipe_bayar == null) {
+      showMessage({
+        type: 'danger',
+        message: 'Tipe pembayaran harus di pilih COD atau Transfer'
       })
     } else {
       setLoading(true);
@@ -324,6 +330,58 @@ export default function Checkout({ navigation, route }) {
 
 
         </ScrollView>
+        <View style={{
+          flex: 0.5,
+          padding: 10,
+          flexDirection: 'row'
+        }}>
+
+          <View style={{
+            flex: 1,
+
+          }}>
+            <TouchableOpacity onPress={() => {
+              setKirim({
+                ...kirim,
+                tipe_bayar: 'Ambil di toko'
+              })
+            }} style={{
+              padding: 10,
+              marginRight: 5,
+              backgroundColor: kirim.tipe_bayar == 'Ambil di toko' ? colors.primary : colors.white,
+              borderWidth: 1,
+              borderColor: colors.secondary
+            }}>
+              <Text style={{
+                textAlign: 'center',
+                fontFamily: fonts.secondary[600],
+              }}>Ambil di toko</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{
+            flex: 1,
+
+          }}>
+            <TouchableOpacity onPress={() => {
+              setKirim({
+                ...kirim,
+                tipe_bayar: 'Transfer Bank'
+              })
+            }} style={{
+              padding: 10,
+              marginLeft: 5,
+              backgroundColor: kirim.tipe_bayar == 'Transfer Bank' ? colors.primary : colors.white,
+              borderWidth: 1,
+              borderColor: colors.secondary
+            }}>
+              <Text style={{
+                textAlign: 'center',
+                fontFamily: fonts.secondary[600],
+              }}>Transfer Bank</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         <View
           style={{
             flexDirection: 'row',
@@ -356,7 +414,7 @@ export default function Checkout({ navigation, route }) {
         <View style={{ padding: 10 }}>
           <MyButton
             onPress={simpan}
-            title="SIMPAN PESANAN"
+            title="Buat Pesanan"
             warna={colors.secondary}
             Icons="cloud-upload"
             style={{

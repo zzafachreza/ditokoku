@@ -30,27 +30,42 @@ export default function Pinjam({ navigation, route }) {
 
   const [jumlah, setJumlah] = useState(1);
   const [user, setUser] = useState({});
-  const [cart, setCart] = useState(0);
+  const [suka, setSuka] = useState(0);
 
   useEffect(() => {
     if (isFocused) {
       // modalizeRef.current.open();
-      getData('user').then(res => {
-        console.log('data user', res);
-        setUser(res);
-      });
-      getData('cart').then(res => {
-        console.log(res);
-        setCart(res);
-      });
+      __getTransaction();
+
     }
   }, [isFocused]);
+
+
+  const __getTransaction = () => {
+    getData('user').then(res => {
+      console.log('data user', res.id);
+
+      axios.post(urlAPI + '/1_wish_cek.php', {
+        fid_user: res.id,
+        fid_barang: route.params.id
+      }).then(cek => {
+
+        console.log(cek.data);
+        setSuka(cek.data);
+      })
+
+      setUser(res);
+    });
+  }
 
   const modalizeRef = useRef();
 
   const onOpen = () => {
     modalizeRef.current?.open();
   };
+
+
+
 
   const addToCart = () => {
     const kirim = {
@@ -139,14 +154,51 @@ export default function Pinjam({ navigation, route }) {
             style={{
               padding: 10,
             }}>
-            <Text
-              style={{
-                fontFamily: fonts.secondary[600],
-                fontSize: windowWidth / 20,
-                color: colors.secondary,
-              }}>
-              Rp. {new Intl.NumberFormat().format(item.harga_barang)}
-            </Text>
+            <View style={{
+              flexDirection: 'row'
+            }}>
+              <Text
+                style={{
+                  flex: 1,
+                  fontFamily: fonts.secondary[600],
+                  fontSize: windowWidth / 20,
+                  color: colors.secondary,
+                }}>
+                Rp. {new Intl.NumberFormat().format(item.harga_barang)}
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+
+                  if (suka == 0) {
+
+                    axios.post(urlAPI + '/1_wish_add.php', {
+                      fid_user: user.id,
+                      fid_barang: route.params.id
+                    }).then(cek => {
+
+                      console.log(cek.data);
+                      __getTransaction();
+
+                    })
+                  } else {
+                    axios.post(urlAPI + '/1_wish_hapus.php', {
+                      fid_user: user.id,
+                      fid_barang: route.params.id
+                    }).then(x => {
+                      getData('user').then(tkn => {
+                        __getTransaction()
+                      });
+
+                    })
+                  }
+                }}
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Icon type="ionicon" name={suka > 0 ? 'heart' : 'heart-outline'} color={suka > 0 ? colors.danger : colors.black} />
+              </TouchableOpacity>
+            </View>
             <Text
               style={{
                 fontFamily: fonts.secondary[600],

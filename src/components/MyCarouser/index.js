@@ -12,7 +12,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { colors } from '../../utils/colors';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-import { fonts } from '../../utils/fonts';
+import { fonts, windowWidth } from '../../utils/fonts';
 import { Icon } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { urlAPI } from '../../utils/localStorage';
@@ -37,9 +37,9 @@ export default function MyCarouser() {
       source={{ uri: item.image }}
       style={{
         resizeMode: 'cover',
-        height: 180,
-        width: 300,
-        borderRadius: 10,
+        height: 220,
+        width: windowWidth,
+        borderRadius: 0,
       }}
     />
   );
@@ -49,12 +49,12 @@ export default function MyCarouser() {
       <Carousel
         loop={true}
         // layout="stack"
-        layoutCardOffset={18}
+        layoutCardOffset={0}
         data={data}
         containerCustomStyle={styles.carousel}
         renderItem={renderCarouselItem}
         sliderWidth={Dimensions.get('window').width}
-        itemWidth={300}
+        itemWidth={windowWidth}
         removeClippedSubviews={false}
       />
     </View>
@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: colors.black,
     opacity: 1,
-    height: 250,
-    width: 300,
+    height: 300,
+    width: windowWidth,
     borderRadius: 10,
     // overflow: 'hidden',
   },

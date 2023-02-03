@@ -151,6 +151,20 @@ export default function Login({ navigation }) {
               })
             }
           />
+          <TouchableOpacity onPress={() => {
+            navigation.navigate('Add');
+          }} style={{
+            paddingHorizontal: 5,
+            paddingVertical: 10,
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end'
+          }}>
+            <Text style={{
+              left: 5,
+              fontFamily: fonts.secondary[400],
+              fontSize: windowWidth / 30
+            }}>Lupa password ?</Text>
+          </TouchableOpacity>
 
 
           <MyGap jarak={40} />
@@ -163,21 +177,7 @@ export default function Login({ navigation }) {
             />
           )}
 
-          {/* <TouchableOpacity onPress={() => {
-            navigation.navigate('Add');
-          }} style={{
-            paddingHorizontal: 5,
-            paddingVertical: 10,
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'row'
-          }}>
-            <Text style={{
-              left: 5,
-              fontFamily: fonts.secondary[600],
-              fontSize: windowWidth / 30
-            }}>Lupa Password ?</Text>
-          </TouchableOpacity> */}
+
         </View>
       </ScrollView>
       {

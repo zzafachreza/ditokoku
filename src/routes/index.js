@@ -55,6 +55,7 @@ import {
   AddSatu,
   AddDua,
   Kuis,
+  Wish,
 } from '../pages';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigator } from '../components';
@@ -68,9 +69,10 @@ const MainApp = () => {
   return (
     <Tab.Navigator tabBar={props => <BottomNavigator {...props} />}>
       <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Produk" component={Barang} />
       <Tab.Screen name="History" component={ListData} />
 
-      {/* <Tab.Screen name="Notifikasi" component={Notifikasi} /> */}
+      <Tab.Screen name="Wish" component={Wish} />
       <Tab.Screen name="Account" component={Account} />
     </Tab.Navigator>
   );

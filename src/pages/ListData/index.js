@@ -88,6 +88,8 @@ export default function ({ navigation, route }) {
         </View>
         <View style={{
           flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center'
         }}>
           <Text
             style={{
@@ -98,6 +100,18 @@ export default function ({ navigation, route }) {
               fontFamily: fonts.secondary[600],
             }}>
             {item.status}
+          </Text>
+          <Text
+            style={{
+              fontSize: windowWidth / 35,
+              // color: colors.white,
+              textAlign: 'center',
+              color: colors.white,
+              backgroundColor: item.tipe_bayar == "Ambil di toko" ? colors.danger : colors.secondary,
+              paddingHorizontal: 5,
+              fontFamily: fonts.secondary[600],
+            }}>
+            {item.tipe_bayar}
           </Text>
         </View>
       </View>

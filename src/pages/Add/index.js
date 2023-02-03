@@ -32,18 +32,15 @@ export default function ({ navigation, route }) {
                 setLoading(false);
                 showMessage({
                     type: 'success',
-                    message: 'Sent Successfully !'
+                    message: 'Silahkan cek email kamu'
                 });
-                // navigation.replace('MainApp');
+                navigation.replace('Login');
             })
         }, 1200)
     }
 
     useEffect(() => {
-        axios.get(urlAPI + '/1get_component.php').then(res => {
-            console.log(res.data);
-            setData(res.data);
-        })
+
     }, [])
 
     return (
