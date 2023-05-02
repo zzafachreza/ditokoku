@@ -71,7 +71,7 @@ export default function Checkout({ navigation, route }) {
 
   const simpan = () => {
     console.error('kirim', kirim);
-    if (kirim.total_ongkir == null) {
+    if (kirim.total_ongkir == null && kirim.tipe_bayar !== 'Ambil di toko') {
       showMessage({
         type: 'danger',
         message: 'Opsi pengiriman harus di isi !'
@@ -83,7 +83,7 @@ export default function Checkout({ navigation, route }) {
       })
     } else {
       setLoading(true);
-      // console.log('kirim ke server', item);
+      console.log('kirim ke server', item);
       setTimeout(() => {
         axios
           .post(urlAPI + '/1add_transaksi.php', kirim)
@@ -343,7 +343,11 @@ export default function Checkout({ navigation, route }) {
             <TouchableOpacity onPress={() => {
               setKirim({
                 ...kirim,
-                tipe_bayar: 'Ambil di toko'
+                tipe_bayar: 'Ambil di toko',
+                kode_kurir: 'jne',
+                layanan_kurir: 'Layanan Reguler',
+                paket_kurir: 'REG',
+                estimasi_kurir: '1-2',
               })
             }} style={{
               padding: 10,
@@ -398,23 +402,40 @@ export default function Checkout({ navigation, route }) {
             }}>
             Total Pembayaran
           </Text>
-          <Text
-            style={{
-              color: colors.primary,
-              fontSize: windowWidth / 20,
-              fontFamily: fonts.secondary[600],
-              padding: 10,
-            }}>
-            {/* Rp. {new Intl.NumberFormat().format(kirim.harga_total + kirim.total_ongkir)} */}
+          {
+            kirim.tipe_bayar == 'Transfer Bank' &&
+            <Text
+              style={{
+                color: colors.primary,
+                fontSize: windowWidth / 20,
+                fontFamily: fonts.secondary[600],
+                padding: 10,
+              }}>
+              {/* Rp. {new Intl.NumberFormat().format(kirim.harga_total + kirim.total_ongkir)} */}
 
-            Rp. {new Intl.NumberFormat().format(kirim.total_ongkir == null ? 0 : kirim.harga_total + kirim.total_ongkir)}
-          </Text>
+              Rp. {new Intl.NumberFormat().format(kirim.total_ongkir == null ? 0 : kirim.harga_total + kirim.total_ongkir)}
+            </Text>
+          }
+          {
+            kirim.tipe_bayar == 'Ambil di toko' &&
+            <Text
+              style={{
+                color: colors.primary,
+                fontSize: windowWidth / 20,
+                fontFamily: fonts.secondary[600],
+                padding: 10,
+              }}>
+              {/* Rp. {new Intl.NumberFormat().format(kirim.harga_total + kirim.total_ongkir)} */}
+
+              Rp. {new Intl.NumberFormat().format(kirim.harga_total)}
+            </Text>
+          }
         </View>
 
         <View style={{ padding: 10 }}>
           <MyButton
             onPress={simpan}
-            title="Buat Pesanan"
+            title="Simpan Pesanan"
             warna={colors.secondary}
             Icons="cloud-upload"
             style={{

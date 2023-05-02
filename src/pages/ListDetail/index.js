@@ -150,6 +150,31 @@ export default function ListDetail({ navigation, route }) {
                 {item.tanggal}, {item.jam} WIB
               </Text>
             </View>
+            <View style={{
+              flexDirection: 'row'
+            }}>
+              <Text
+                style={{
+                  flex: 1,
+                  fontFamily: fonts.secondary[400],
+                  padding: 10,
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+
+                }}>
+                Tipe Pembayaran
+              </Text>
+              <Text
+                style={{
+                  fontFamily: fonts.secondary[400],
+                  padding: 10,
+                  fontSize: windowWidth / 30,
+                  color: colors.black,
+
+                }}>
+                {item.tipe_bayar}
+              </Text>
+            </View>
           </View>
 
 
@@ -221,94 +246,97 @@ export default function ListDetail({ navigation, route }) {
             backgroundColor: colors.white,
             marginVertical: 5,
           }}>
-            <Text style={{
-              fontFamily: fonts.secondary[600],
-              fontSize: windowWidth / 30,
-              color: colors.black,
-              margin: 10,
-
-            }}>Informasi Pengiriman</Text>
 
 
-            <View style={{
-              flexDirection: 'row',
-              padding: 10,
-            }}>
+
+            {item.tipe_bayar == "Transfer Bank" && <>
+              <Text style={{
+                fontFamily: fonts.secondary[600],
+                fontSize: windowWidth / 30,
+                color: colors.black,
+                margin: 10,
+
+              }}>Informasi Pengiriman</Text>
               <View style={{
-                flex: 0.5,
-                justifyContent: 'center'
+                flexDirection: 'row',
+                padding: 10,
               }}>
-                <Text style={{
-                  fontFamily: fonts.secondary[400],
-                  fontSize: windowWidth / 30,
-                  color: colors.black,
-
-                }}>Kurir</Text>
-              </View>
-              <View style={{
-                flex: 1.5,
-                justifyContent: 'flex-start',
-              }}>
-                <Text style={{
-                  fontFamily: fonts.secondary[400],
-                  fontSize: windowWidth / 30,
-                  color: colors.black,
-
+                <View style={{
+                  flex: 0.5,
+                  justifyContent: 'center'
                 }}>
-                  {item.nama_kurir} - {item.paket}
-                </Text>
-              </View>
-            </View>
-            <View style={{
-              flexDirection: 'row',
-              padding: 10,
-            }}>
-              <View style={{
-                flex: 0.5,
-                justifyContent: 'center'
-              }}>
-                <Text style={{
-                  fontFamily: fonts.secondary[400],
-                  fontSize: windowWidth / 30,
-                  color: colors.black,
+                  <Text style={{
+                    fontFamily: fonts.secondary[400],
+                    fontSize: windowWidth / 30,
+                    color: colors.black,
 
-                }}>No. Resi</Text>
-              </View>
-              <View style={{
-                flex: 1.5,
-                justifyContent: 'flex-start',
-                flexDirection: 'row'
-              }}>
-                <Text style={{
-                  fontFamily: fonts.secondary[400],
-                  fontSize: windowWidth / 30,
-                  color: colors.black,
-                  textAlign: 'left',
-                  flex: 1,
+                  }}>Kurir</Text>
+                </View>
+                <View style={{
+                  flex: 1.5,
+                  justifyContent: 'flex-start',
                 }}>
-                  {item.nomor_resi}
-                </Text>
+                  <Text style={{
+                    fontFamily: fonts.secondary[400],
+                    fontSize: windowWidth / 30,
+                    color: colors.black,
 
-                {item.status == 'SUDAH DIKIRIM' &&
-                  <TouchableOpacity onPress={() => navigation.navigate('Akses', {
-                    nomor_resi: item.nomor_resi,
-                    kode_kurir: item.kode_kurir
-                  })} style={{
-                    padding: 7,
-                    borderRadius: 2,
-                    backgroundColor: colors.tertiary,
-                    flexDirection: 'row'
                   }}>
-                    <Icon type='ionicon' color={colors.black} name='search-outline' size={windowWidth / 30} />
-                    <Text style={{
-                      left: 2,
-                      color: colors.black,
-                      fontFamily: fonts.secondary[400],
-                      fontSize: windowWidth / 30,
-                    }}>Lacak Resi</Text>
-                  </TouchableOpacity>}
+                    {item.nama_kurir} - {item.paket}
+                  </Text>
+                </View>
               </View>
-            </View>
+              <View style={{
+                flexDirection: 'row',
+                padding: 10,
+              }}>
+                <View style={{
+                  flex: 0.5,
+                  justifyContent: 'center'
+                }}>
+                  <Text style={{
+                    fontFamily: fonts.secondary[400],
+                    fontSize: windowWidth / 30,
+                    color: colors.black,
+
+                  }}>No. Resi</Text>
+                </View>
+                <View style={{
+                  flex: 1.5,
+                  justifyContent: 'flex-start',
+                  flexDirection: 'row'
+                }}>
+                  <Text style={{
+                    fontFamily: fonts.secondary[400],
+                    fontSize: windowWidth / 30,
+                    color: colors.black,
+                    textAlign: 'left',
+                    flex: 1,
+                  }}>
+                    {item.nomor_resi}
+                  </Text>
+
+                  {item.status == 'SUDAH DIKIRIM' &&
+                    <TouchableOpacity onPress={() => navigation.navigate('Akses', {
+                      nomor_resi: item.nomor_resi,
+                      kode_kurir: item.kode_kurir
+                    })} style={{
+                      padding: 7,
+                      borderRadius: 2,
+                      backgroundColor: colors.tertiary,
+                      flexDirection: 'row'
+                    }}>
+                      <Icon type='ionicon' color={colors.black} name='search-outline' size={windowWidth / 30} />
+                      <Text style={{
+                        left: 2,
+                        color: colors.black,
+                        fontFamily: fonts.secondary[400],
+                        fontSize: windowWidth / 30,
+                      }}>Lacak Resi</Text>
+                    </TouchableOpacity>}
+                </View>
+              </View>
+            </>}
 
 
             <View style={{

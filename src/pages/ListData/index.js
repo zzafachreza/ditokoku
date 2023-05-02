@@ -133,22 +133,39 @@ export default function ({ navigation, route }) {
             fontFamily: fonts.secondary[400],
             color: colors.black,
           }}>Opsi Pengiriman</Text>
-          <Text
-            style={{
-              fontSize: windowWidth / 30,
-              fontFamily: fonts.secondary[600],
-              color: colors.black,
-            }}>
-            {item.nama_kurir}
-          </Text>
-          <Text
-            style={{
-              fontSize: windowWidth / 30,
-              fontFamily: fonts.secondary[600],
-              color: colors.primary,
-            }}>
-            {item.paket}
-          </Text>
+          {item.tipe_bayar == "Transfer Bank" && <>
+
+            <Text
+              style={{
+                fontSize: windowWidth / 30,
+                fontFamily: fonts.secondary[600],
+                color: colors.black,
+              }}>
+              {item.nama_kurir}
+            </Text>
+            <Text
+              style={{
+                fontSize: windowWidth / 30,
+                fontFamily: fonts.secondary[600],
+                color: colors.primary,
+              }}>
+              {item.paket}
+            </Text>
+
+          </>}
+
+          {item.tipe_bayar !== "Transfer Bank" && <>
+
+            <Text
+              style={{
+                fontSize: windowWidth / 30,
+                fontFamily: fonts.secondary[600],
+                color: colors.black,
+              }}>
+              Ambil di toko
+            </Text>
+
+          </>}
 
         </View>
         <View
